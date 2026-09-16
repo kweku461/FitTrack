@@ -1,0 +1,61 @@
+.log-entry-page h1 {
+  margin: 0 0 24px;
+  font-size: 24px;
+}
+
+.log-entry-page section {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 16px;
+}
+
+.log-entry-page h2 {
+  margin: 0 0 14px;
+  font-size: 16px;
+  color: var(--text-primary);
+}
+
+.log-entry-page form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: flex-end;
+}
+
+.log-entry-page input {
+  flex: 1;
+  min-width: 140px;
+}
+
+.log-entry-page label {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 13px;
+  color: var(--text-secondary);
+  flex: 1;
+  min-width: 180px;
+}
+
+.log-entry-page button {
+  background: var(--accent);
+  color: var(--accent-text);
+  border: none;
+  padding: 10px 18px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 14px;
+  white-space: nowrap;
+}
+
+.message {
+  background: var(--surface-hover);
+  border: 1px solid var(--border);
+  color: var(--accent);
+  padding: 10px 14px;
+  border-radius: 8px;
+  font-size: 13px;
+  margin-bottom: 16px;
+}
