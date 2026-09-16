@@ -6,7 +6,7 @@ import './styles/Sidebar.css'
 import './styles/Dashboard.css'
 import './styles/auth.css';
 import './styles/log-entry.css';
-import './styles/Goals.css';
+import './styles/goals.css';
 import App from './App.jsx'
 import { ThemeProvider } from './context/ThemeContext.jsx'
 
