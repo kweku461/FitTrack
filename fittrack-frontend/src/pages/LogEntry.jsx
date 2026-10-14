@@ -5,7 +5,7 @@ function LogEntry() {
   const [activity, setActivity] = useState({ steps: '', calories: '', active_minutes: '' });
   const [water, setWater] = useState('');
   const [sleep, setSleep] = useState({ bedtime: '', wake_time: '' });
-  const [message, setMessage] = useState('');
+  const [status, setStatus] = useState(null); // { type: 'success' | 'error', text }
 
   const handleActivitySubmit = async (e) => {
     e.preventDefault();
@@ -15,10 +15,13 @@ function LogEntry() {
         calories: Number(activity.calories) || 0,
         active_minutes: Number(activity.active_minutes) || 0,
       });
-      setMessage('Activity logged!');
+      setStatus({ type: 'success', text: 'Activity logged!' });
       setActivity({ steps: '', calories: '', active_minutes: '' });
     } catch (err) {
-      setMessage(err.response?.data?.message || 'Failed to log activity');
+      setStatus({
+        type: 'error',
+        text: err.response?.data?.message || 'Failed to log activity',
+      });
     }
   };
 
@@ -26,10 +29,13 @@ function LogEntry() {
     e.preventDefault();
     try {
       await api.post('/water', { amount_ml: Number(water) });
-      setMessage('Water logged!');
+      setStatus({ type: 'success', text: 'Water logged!' });
       setWater('');
     } catch (err) {
-      setMessage(err.response?.data?.message || 'Failed to log water');
+      setStatus({
+        type: 'error',
+        text: err.response?.data?.message || 'Failed to log water',
+      });
     }
   };
 
@@ -40,17 +46,24 @@ function LogEntry() {
         bedtime: sleep.bedtime,
         wake_time: sleep.wake_time,
       });
-      setMessage('Sleep logged!');
+      setStatus({ type: 'success', text: 'Sleep logged!' });
       setSleep({ bedtime: '', wake_time: '' });
     } catch (err) {
-      setMessage(err.response?.data?.message || 'Failed to log sleep');
+      setStatus({
+        type: 'error',
+        text: err.response?.data?.message || 'Failed to log sleep',
+      });
     }
   };
 
   return (
     <div className="log-entry-page">
       <h1>Log Today</h1>
-      {message && <p className="message">{message}</p>}
+      {status && (
+        <p className={`message${status.type === 'error' ? ' message-error' : ''}`}>
+          {status.text}
+        </p>
+      )}
 
       <section>
         <h2>Activity</h2>
@@ -108,6 +121,7 @@ function LogEntry() {
             <input
               type="datetime-local"
               value={sleep.wake_time}
+              min={sleep.bedtime || undefined}
               onChange={(e) => setSleep({ ...sleep, wake_time: e.target.value })}
               required
             />

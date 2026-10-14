@@ -1,4 +1,5 @@
 const pool = require('../db');
+const { parseSleep } = require('../utils/sleep');
 
 async function createSleepLog(req, res) {
   const { bedtime, wake_time } = req.body;
@@ -7,18 +8,14 @@ async function createSleepLog(req, res) {
     return res.status(400).json({ message: 'bedtime and wake_time are required' });
   }
 
-  const bed = new Date(bedtime);
-  const wake = new Date(wake_time);
-  let hoursSlept = (wake - bed) / (1000 * 60 * 60);
-
-  // handle overnight sleep (bedtime PM, wake_time AM next day) if hours came out negative
-  if (hoursSlept < 0) hoursSlept += 24;
+  const { hours, error } = parseSleep(bedtime, wake_time);
+  if (error) return res.status(400).json({ message: error });
 
   try {
     const result = await pool.query(
       `INSERT INTO sleep_logs (user_id, bedtime, wake_time, hours_slept)
        VALUES ($1, $2, $3, $4) RETURNING *`,
-      [req.userId, bedtime, wake_time, hoursSlept.toFixed(2)]
+      [req.userId, bedtime, wake_time, hours]
     );
     res.status(201).json(result.rows[0]);
   } catch (err) {

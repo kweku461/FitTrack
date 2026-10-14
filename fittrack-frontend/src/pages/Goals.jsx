@@ -1,47 +1,89 @@
 import { useEffect, useState } from 'react';
 import api from '../api/client';
 
+const toForm = (data) => ({
+  daily_steps_target: data.daily_steps_target,
+  daily_water_target_ml: data.daily_water_target_ml,
+  daily_sleep_target_hours: data.daily_sleep_target_hours,
+});
+
 function Goals() {
-  const [goals, setGoals] = useState(null);
   const [form, setForm] = useState({
     daily_steps_target: '',
     daily_water_target_ml: '',
     daily_sleep_target_hours: '',
   });
-  const [message, setMessage] = useState('');
+  const [loading, setLoading] = useState(true);
+  const [loadError, setLoadError] = useState('');
+  const [reloadKey, setReloadKey] = useState(0);
+  const [status, setStatus] = useState(null); // { type: 'success' | 'error', text }
 
   useEffect(() => {
-    api.get('/goals').then((res) => {
-      setGoals(res.data);
-      setForm({
-        daily_steps_target: res.data.daily_steps_target,
-        daily_water_target_ml: res.data.daily_water_target_ml,
-        daily_sleep_target_hours: res.data.daily_sleep_target_hours,
+    let ignore = false;
+
+    api.get('/goals')
+      .then((res) => {
+        if (!ignore) setForm(toForm(res.data));
+      })
+      .catch((err) => {
+        if (!ignore) {
+          setLoadError(
+            err.response?.data?.message || 'Could not load your goals. Please try again.'
+          );
+        }
+      })
+      .finally(() => {
+        if (!ignore) setLoading(false);
       });
-    });
-  }, []);
+
+    return () => {
+      ignore = true;
+    };
+  }, [reloadKey]);
+
+  const handleRetry = () => {
+    setLoadError('');
+    setLoading(true);
+    setReloadKey((k) => k + 1);
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setStatus(null);
     try {
       const res = await api.put('/goals', {
         daily_steps_target: Number(form.daily_steps_target),
         daily_water_target_ml: Number(form.daily_water_target_ml),
         daily_sleep_target_hours: Number(form.daily_sleep_target_hours),
       });
-      setGoals(res.data);
-      setMessage('Goals updated!');
+      setForm(toForm(res.data));
+      setStatus({ type: 'success', text: 'Goals updated!' });
     } catch (err) {
-      setMessage(err.response?.data?.message || 'Failed to update goals');
+      setStatus({
+        type: 'error',
+        text: err.response?.data?.message || 'Failed to update goals',
+      });
     }
   };
 
-  if (!goals) return <p>Loading...</p>;
+  if (loading) return <p>Loading...</p>;
+
+  if (loadError) {
+    return (
+      <div className="goals-page">
+        <h1>Your Goals</h1>
+        <p className="error">{loadError}</p>
+        <button onClick={handleRetry}>Try again</button>
+      </div>
+    );
+  }
 
   return (
     <div className="goals-page">
       <h1>Your Goals</h1>
-      {message && <p className="message">{message}</p>}
+      {status && (
+        <p className={status.type === 'error' ? 'error' : 'message'}>{status.text}</p>
+      )}
       <form onSubmit={handleSubmit}>
         <label>
           Daily steps target
