@@ -1,4 +1,5 @@
 const pool = require('../db');
+const { LIMITS, checkNumber, firstError, toNumberOrNull } = require('../utils/validate');
 
 async function getGoals(req, res) {
   try {
@@ -23,6 +24,13 @@ async function getGoals(req, res) {
 async function updateGoals(req, res) {
   const { daily_steps_target, daily_water_target_ml, daily_sleep_target_hours } = req.body;
 
+  const error = firstError(
+    checkNumber('daily_steps_target', daily_steps_target, { ...LIMITS.daily_steps_target, integer: true }),
+    checkNumber('daily_water_target_ml', daily_water_target_ml, { ...LIMITS.daily_water_target_ml, integer: true }),
+    checkNumber('daily_sleep_target_hours', daily_sleep_target_hours, LIMITS.daily_sleep_target_hours)
+  );
+  if (error) return res.status(400).json({ message: error });
+
   try {
     const result = await pool.query(
       `INSERT INTO goals (user_id, daily_steps_target, daily_water_target_ml, daily_sleep_target_hours)
@@ -34,7 +42,12 @@ async function updateGoals(req, res) {
          daily_sleep_target_hours = COALESCE($4, goals.daily_sleep_target_hours),
          updated_at = NOW()
        RETURNING *`,
-      [req.userId, daily_steps_target, daily_water_target_ml, daily_sleep_target_hours]
+      [
+        req.userId,
+        toNumberOrNull(daily_steps_target),
+        toNumberOrNull(daily_water_target_ml),
+        toNumberOrNull(daily_sleep_target_hours),
+      ]
     );
 
     res.json(result.rows[0]);

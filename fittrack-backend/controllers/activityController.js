@@ -1,13 +1,26 @@
 const pool = require('../db');
+const { LIMITS, checkNumber, firstError } = require('../utils/validate');
 
 async function createActivity(req, res) {
   const { steps, calories, active_minutes } = req.body;
+
+  const error = firstError(
+    checkNumber('steps', steps, { ...LIMITS.steps, integer: true }),
+    checkNumber('calories', calories, { ...LIMITS.calories, integer: true }),
+    checkNumber('active_minutes', active_minutes, { ...LIMITS.active_minutes, integer: true })
+  );
+  if (error) return res.status(400).json({ message: error });
+
+  const values = [steps, calories, active_minutes].map((v) => Number(v) || 0);
+  if (values.every((v) => v === 0)) {
+    return res.status(400).json({ message: 'Enter at least one value greater than 0' });
+  }
 
   try {
     const result = await pool.query(
       `INSERT INTO activities (user_id, steps, calories, active_minutes)
        VALUES ($1, $2, $3, $4) RETURNING *`,
-      [req.userId, steps || 0, calories || 0, active_minutes || 0]
+      [req.userId, ...values]
     );
     res.status(201).json(result.rows[0]);
   } catch (err) {
