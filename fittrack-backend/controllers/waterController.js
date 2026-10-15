@@ -1,16 +1,20 @@
 const pool = require('../db');
+const { LIMITS, checkNumber } = require('../utils/validate');
 
 async function createWaterLog(req, res) {
   const { amount_ml } = req.body;
 
-  if (!amount_ml) {
-    return res.status(400).json({ message: 'amount_ml is required' });
-  }
+  const error = checkNumber('amount_ml', amount_ml, {
+    ...LIMITS.amount_ml,
+    integer: true,
+    required: true,
+  });
+  if (error) return res.status(400).json({ message: error });
 
   try {
     const result = await pool.query(
       `INSERT INTO water_logs (user_id, amount_ml) VALUES ($1, $2) RETURNING *`,
-      [req.userId, amount_ml]
+      [req.userId, Number(amount_ml)]
     );
     res.status(201).json(result.rows[0]);
   } catch (err) {

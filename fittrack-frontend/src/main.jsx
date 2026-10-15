@@ -8,7 +8,7 @@ import './styles/auth.css';
 import './styles/log-entry.css';
 import './styles/goals.css';
 import App from './App.jsx'
-import { ThemeProvider } from './context/ThemeContext.jsx'
+import { ThemeProvider } from './context/ThemeProvider.jsx'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>

@@ -20,14 +20,24 @@ app.use('/water', waterRoutes);
 app.use('/sleep', sleepRoutes);
 app.use('/goals', goalsRoutes);
 app.use('/dashboard', dashboardRoutes);
+
+
 app.get('/health', async (req, res) => {
   try {
     const result = await pool.query('SELECT NOW()');
     res.json({ status: 'ok', dbTime: result.rows[0].now });
   } catch (err) {
-    console.error(err);
-    res.status(500).json({ status: 'error', message: err.message });
+    console.error('Health check failed:', err);
+    res.status(503).json({ status: 'error', message: 'Service unavailable' });
   }
+});
+
+app.use((err, req, res, next) => {
+  if (err.type === 'entity.parse.failed') {
+    return res.status(400).json({ message: 'Invalid JSON in request body' });
+  }
+  console.error(err);
+  res.status(500).json({ message: 'Something went wrong' });
 });
 
 const PORT = process.env.PORT || 5001;

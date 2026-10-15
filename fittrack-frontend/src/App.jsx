@@ -1,10 +1,12 @@
+import { lazy } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import Signup from './pages/Signup';
 import Login from './pages/Login';
-import Dashboard from './pages/Dashboard';
 import ProtectedRoute from './components/ProtectedRoute';
-import LogEntry from './pages/LogEntry';
-import Goals from './pages/Goals';
+
+const Dashboard = lazy(() => import('./pages/Dashboard'));
+const LogEntry = lazy(() => import('./pages/LogEntry'));
+const Goals = lazy(() => import('./pages/Goals'));
 
 function App() {
   return (
@@ -24,10 +26,10 @@ function App() {
           path="/log"
           element={
             <ProtectedRoute>
-            <LogEntry />
+              <LogEntry />
             </ProtectedRoute>
-        }
-      />
+          }
+        />
         <Route
           path="/goals"
           element={

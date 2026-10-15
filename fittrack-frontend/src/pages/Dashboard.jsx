@@ -39,7 +39,7 @@ function Dashboard() {
     { label: 'Steps', value: Math.round(avgSteps).toLocaleString(), goalText: `Goal ${goals?.daily_steps_target?.toLocaleString()}`, pct: stepsPct },
     { label: 'Water', value: `${(avgWater / 1000).toFixed(2)} L`, goalText: `Goal ${(goals?.daily_water_target_ml / 1000).toFixed(1)} L`, pct: waterPct },
     { label: 'Sleep', value: `${avgSleep.toFixed(1)}h`, goalText: `Goal ${goals?.daily_sleep_target_hours}h`, pct: sleepPct },
-    { label: 'Calories burned', value: `${Math.round(avgCalories)} kcal`, goalText: `${week.filter(d => d.calories > 0).length} logged entries`, pct: null },
+    { label: 'Calories burned', value: `${Math.round(avgCalories)} kcal`, goalText: `${week.filter(d => d.calories > 0).length} active days`, pct: null },
     { label: 'Active minutes', value: `${Math.round(avgActiveMin)} min`, goalText: 'From all logged activities', pct: null },
   ];
 
@@ -47,7 +47,7 @@ function Dashboard() {
     <div className="dashboard-page">
       <div className="dashboard-header">
         <h1>Your Week</h1>
-        <p className="subtitle">Here's your fitness overview for this week.</p>
+        <p className="subtitle">Here's your fitness overview for the last 7 days.</p>
       </div>
 
       <div className="metric-grid">
@@ -70,8 +70,8 @@ function Dashboard() {
       </div>
 
       <div className="card chart-card">
-        <h2>Weekly activity</h2>
-        <p className="subtitle">Monday to Sunday, from your logged activities.</p>
+        <h2>Activity, last 7 days</h2>
+        <p className="subtitle">Daily totals from your logged entries.</p>
         <ResponsiveContainer width="100%" height={280}>
           <LineChart data={week}>
             <CartesianGrid strokeDasharray="3 3" stroke="var(--border)" />
