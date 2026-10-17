@@ -45,3 +45,8 @@ input, select {
   color: var(--danger);
   padding: 20px;
 }
+
+.logo {
+  display: block;
+  width: auto;
+}

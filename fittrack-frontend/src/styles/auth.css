@@ -28,6 +28,10 @@
   width: 100%;
 }
 
+.auth-form .logo {
+  margin: 0 auto 8px;
+}
+
 .auth-form button {
   background: var(--accent);
   color: var(--accent-text);

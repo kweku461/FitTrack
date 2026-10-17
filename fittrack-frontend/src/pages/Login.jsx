@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import api from '../api/client';
+import Logo from '../components/Logo';
 
 function Login() {
   const [email, setEmail] = useState('');
@@ -24,7 +25,8 @@ function Login() {
   return (
     <div className="auth-page">
       <form className="auth-form" onSubmit={handleSubmit}>
-        <h1>Welcome back</h1>
+        <Logo size={48} />
+          <h1>Welcome back</h1>
         {error && <p className="error">{error}</p>}
         <input
           type="email"

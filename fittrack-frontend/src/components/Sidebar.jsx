@@ -1,5 +1,6 @@
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useTheme } from '../hooks/useTheme';
+import Logo from './Logo';
 
 function Sidebar() {
   const { theme, toggleTheme } = useTheme();
@@ -15,7 +16,10 @@ function Sidebar() {
 
   return (
     <aside className="sidebar">
-      <div className="sidebar-logo">FitTrack</div>
+      <div className="sidebar-brand">
+        <Logo size={65} />
+        
+      </div>
 
       <nav className="sidebar-nav">
         <NavLink to="/dashboard" className={linkClass}>Dashboard</NavLink>
