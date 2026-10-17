@@ -63,3 +63,22 @@
 .message-error {
   color: var(--danger);
 }
+
+@media (max-width: 768px) {
+  .log-entry-page form {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .log-entry-page input,
+  .log-entry-page label {
+    flex: none;
+    min-width: 0;
+    width: 100%;
+  }
+
+  .log-entry-page button {
+    width: 100%;
+    padding: 12px;
+  }
+}

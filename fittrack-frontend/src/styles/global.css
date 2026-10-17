@@ -50,3 +50,19 @@ input, select {
   display: block;
   width: auto;
 }
+@media (max-width: 768px) {
+  .app-layout {
+    flex-direction: column;
+  }
+
+  .main-content {
+    max-width: none;
+    padding: 16px 16px calc(88px + env(safe-area-inset-bottom));
+  }
+
+  /* 16px stops iOS from zooming in when an input is focused */
+  input,
+  select {
+    font-size: 16px;
+  }
+}

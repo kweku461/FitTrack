@@ -9,6 +9,7 @@ import './styles/log-entry.css';
 import './styles/goals.css';
 import App from './App.jsx'
 import { ThemeProvider } from './context/ThemeProvider.jsx'
+import './styles/mobile-nav.css';
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>

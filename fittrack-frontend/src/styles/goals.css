@@ -32,3 +32,9 @@
   font-size: 14px;
   margin-top: 4px;
 }
+
+@media (max-width: 768px) {
+  .goals-page form {
+    max-width: none;
+  }
+}
