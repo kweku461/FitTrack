@@ -79,3 +79,128 @@
 .profile-retry {
   color: var(--text-primary);
 }
+
+.profile-form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-bottom: 16px;
+}
+
+.profile-form h3 {
+  margin: 0;
+  font-size: 16px;
+}
+
+.profile-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 14px;
+}
+
+.profile-field > span {
+  color: var(--text-secondary);
+}
+
+.profile-field input {
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text-primary);
+  font-size: 14px;
+}
+
+.profile-field input:focus {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+}
+
+.profile-field small {
+  color: var(--text-secondary);
+  font-size: 12px;
+}
+
+.profile-card .profile-edit {
+  margin-left: auto;
+}
+
+.profile-edit {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-primary);
+  background: var(--surface-hover);
+  border: 1px solid var(--border);
+}
+
+.profile-password-btn {
+  margin-bottom: 16px;
+}
+
+.profile-notice {
+  margin: 0 0 16px;
+  padding: 10px 14px;
+  border-radius: 8px;
+  font-size: 14px;
+  color: var(--accent);
+  background: var(--surface-hover);
+  border: 1px solid var(--border);
+}
+
+.profile-form-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.profile-cancel {
+  padding: 10px 16px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-primary);
+  background: var(--surface-hover);
+  border: 1px solid var(--border);
+}
+
+.profile-cancel:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.profile-submit {
+  align-self: flex-start;
+  padding: 10px 16px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  background: var(--accent);
+  color: var(--accent-text);
+}
+
+.profile-submit:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.settings-appearance {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.settings-appearance h3 {
+  margin: 0 0 4px;
+  font-size: 16px;
+}
+
+.settings-appearance p {
+  margin: 0;
+}

@@ -11,6 +11,7 @@ import App from './App.jsx'
 import { ThemeProvider } from './context/ThemeProvider.jsx'
 import './styles/mobile-nav.css';
 import './styles/profile.css';
+import './styles/user-menu.css';
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
