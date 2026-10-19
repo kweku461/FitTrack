@@ -12,4 +12,22 @@ api.interceptors.request.use((config) => {
   return config;
 });
 
+const PUBLIC_PATHS = ['/auth/login', '/auth/signup'];
+
+api.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    const url = error.config?.url || '';
+    const isPublic = PUBLIC_PATHS.some((path) => url.includes(path));
+
+    if (error.response?.status === 401 && !isPublic) {
+      localStorage.removeItem('token');
+      localStorage.removeItem('user');
+      window.location.assign('/login');
+    }
+
+    return Promise.reject(error);
+  }
+);
+
 export default api;

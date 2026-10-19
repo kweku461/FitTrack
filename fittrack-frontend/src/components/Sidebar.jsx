@@ -19,6 +19,7 @@ function Sidebar() {
         <NavLink to="/dashboard" className={linkClass}>Dashboard</NavLink>
         <NavLink to="/log" className={linkClass}>Log Entry</NavLink>
         <NavLink to="/goals" className={linkClass}>Goals</NavLink>
+        <NavLink to="/profile" className={linkClass}>Profile</NavLink>
       </nav>
 
       <div className="sidebar-footer">

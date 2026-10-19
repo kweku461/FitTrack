@@ -1,10 +1,11 @@
 import { NavLink } from 'react-router-dom';
-import { LayoutDashboard, Plus, Target } from 'lucide-react';
+import { LayoutDashboard, Plus, Target, User } from 'lucide-react';
 
 const items = [
   { to: '/dashboard', label: 'Dashboard', Icon: LayoutDashboard },
   { to: '/log', label: 'Log', Icon: Plus },
   { to: '/goals', label: 'Goals', Icon: Target },
+  { to: '/profile', label: 'Profile', Icon: User },
 ];
 
 function BottomNav() {

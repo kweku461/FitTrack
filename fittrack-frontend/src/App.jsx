@@ -7,6 +7,7 @@ import ProtectedRoute from './components/ProtectedRoute';
 const Dashboard = lazy(() => import('./pages/Dashboard'));
 const LogEntry = lazy(() => import('./pages/LogEntry'));
 const Goals = lazy(() => import('./pages/Goals'));
+const Profile = lazy(() => import('./pages/Profile'));
 
 function App() {
   return (
@@ -35,6 +36,14 @@ function App() {
           element={
             <ProtectedRoute>
               <Goals />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/profile"
+          element={
+            <ProtectedRoute>
+              <Profile />
             </ProtectedRoute>
           }
         />
