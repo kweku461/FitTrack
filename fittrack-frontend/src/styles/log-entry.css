@@ -24,7 +24,8 @@
   align-items: flex-end;
 }
 
-.log-entry-page input {
+.log-entry-page input,
+.log-entry-page select {
   flex: 1;
   min-width: 140px;
 }
@@ -71,6 +72,7 @@
   }
 
   .log-entry-page input,
+  .log-entry-page select,
   .log-entry-page label {
     flex: none;
     min-width: 0;

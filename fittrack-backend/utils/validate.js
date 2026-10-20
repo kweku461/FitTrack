@@ -43,6 +43,27 @@ function checkOption(name, value, options) {
   return null;
 }
 
+// Optional YYYY-MM-DD date that can't be in the future.
+function checkDate(name, value) {
+  if (isMissing(value)) return null;
+  if (typeof value !== 'string' || !/^\d{4}-\d{2}-\d{2}$/.test(value)) {
+    return `${name} must be a date in YYYY-MM-DD format`;
+  }
+  const parsed = new Date(`${value}T00:00:00Z`);
+  if (Number.isNaN(parsed.getTime()) || parsed.toISOString().slice(0, 10) !== value) {
+    return `${name} must be a valid date`;
+  }
+  const today = new Date().toISOString().slice(0, 10);
+  if (value > today) return `${name} can't be in the future`;
+  return null;
+}
+
+// Returns a positive integer id, or null if the id isn't valid.
+function parseId(value) {
+  const n = Number(value);
+  return Number.isInteger(n) && n > 0 ? n : null;
+}
+
 function firstError(...errors) {
   return errors.find(Boolean) || null;
 }
@@ -56,6 +77,8 @@ module.exports = {
   ACTIVITY_TYPES,
   checkNumber,
   checkOption,
+  checkDate,
+  parseId,
   firstError,
   toNumberOrNull,
 };

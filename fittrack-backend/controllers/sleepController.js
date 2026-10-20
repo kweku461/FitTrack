@@ -1,5 +1,6 @@
 const pool = require('../db');
 const { parseSleep } = require('../utils/sleep');
+const { parseId } = require('../utils/validate');
 
 async function createSleepLog(req, res) {
   const { bedtime, wake_time } = req.body;
@@ -37,6 +38,39 @@ async function getSleepLogs(req, res) {
   }
 }
 
+async function updateSleepLog(req, res) {
+  const id = parseId(req.params.id);
+  if (!id) return res.status(400).json({ message: 'Invalid sleep log id' });
+
+  const { bedtime, wake_time } = req.body;
+
+  if (!bedtime || !wake_time) {
+    return res.status(400).json({ message: 'bedtime and wake_time are required' });
+  }
+
+  const { hours, error } = parseSleep(bedtime, wake_time);
+  if (error) return res.status(400).json({ message: error });
+
+  try {
+    const result = await pool.query(
+      `UPDATE sleep_logs
+       SET bedtime = $1, wake_time = $2, hours_slept = $3
+       WHERE id = $4 AND user_id = $5
+       RETURNING *`,
+      [bedtime, wake_time, hours, id, req.userId]
+    );
+
+    if (result.rows.length === 0) {
+      return res.status(404).json({ message: 'Sleep log not found' });
+    }
+
+    res.json(result.rows[0]);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Server error updating sleep log' });
+  }
+}
+
 async function deleteSleepLog(req, res) {
   const { id } = req.params;
 
@@ -57,4 +91,4 @@ async function deleteSleepLog(req, res) {
   }
 }
 
-module.exports = { createSleepLog, getSleepLogs, deleteSleepLog };
+module.exports = { createSleepLog, getSleepLogs, updateSleepLog, deleteSleepLog };
