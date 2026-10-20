@@ -1,37 +1,8 @@
-.mobile-header,
 .bottom-nav {
   display: none;
 }
 
 @media (max-width: 768px) {
-  .mobile-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    position: sticky;
-    top: 0;
-    z-index: 20;
-    padding: calc(10px + env(safe-area-inset-top)) 16px 10px;
-    background: var(--surface);
-    border-bottom: 1px solid var(--border);
-  }
-
-  .mobile-header-actions {
-    display: flex;
-    gap: 8px;
-  }
-
-  .mobile-header-actions button {
-    display: grid;
-    place-items: center;
-    width: 40px;
-    height: 40px;
-    background: var(--surface-hover);
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    color: var(--text-primary);
-  }
-
   .bottom-nav {
     display: flex;
     justify-content: space-around;

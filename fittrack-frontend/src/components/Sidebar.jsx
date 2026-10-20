@@ -1,7 +1,10 @@
 import { NavLink } from 'react-router-dom';
+import { LogOut } from 'lucide-react';
 import Logo from './Logo';
+import { useLogout } from '../hooks/useLogout';
 
 function Sidebar() {
+  const logout = useLogout();
   const linkClass = ({ isActive }) => `sidebar-link${isActive ? ' active' : ''}`;
 
   return (
@@ -17,6 +20,12 @@ function Sidebar() {
         <NavLink to="/settings" className={linkClass}>Settings</NavLink>
       </nav>
 
+      <div className="sidebar-footer">
+        <button type="button" className="sidebar-logout" onClick={logout}>
+          <LogOut size={18} />
+          Log out
+        </button>
+      </div>
     </aside>
   );
 }

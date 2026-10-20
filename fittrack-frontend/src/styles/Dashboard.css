@@ -4,7 +4,7 @@
 
 .dashboard-header h1 {
   margin: 0 0 4px;
-  font-size: 24px;
+  font-size: 28px;
 }
 
 .subtitle {
@@ -15,7 +15,7 @@
 
 .metric-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  grid-template-columns: repeat(3, 1fr);
   gap: 16px;
   margin-bottom: 24px;
 }
@@ -23,42 +23,119 @@
 .metric-card {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 6px;
+  padding: 22px;
+  border-radius: 16px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+.metric-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .metric-label {
   color: var(--text-secondary);
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 500;
 }
 
+.metric-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+}
+
+.tone-accent {
+  color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 15%, transparent);
+}
+
+.tone-orange {
+  color: #f59e0b;
+  background: color-mix(in srgb, #f59e0b 15%, transparent);
+}
+
+.tone-blue {
+  color: #3b82f6;
+  background: color-mix(in srgb, #3b82f6 15%, transparent);
+}
+
 .metric-value {
-  font-size: 28px;
+  font-size: 30px;
   font-weight: 700;
+  margin-top: 4px;
+}
+
+.metric-sub {
+  color: var(--text-secondary);
+  font-size: 13px;
 }
 
 .progress-track {
-  height: 6px;
+  height: 8px;
   background: var(--surface-hover);
-  border-radius: 4px;
+  border-radius: 999px;
   overflow: hidden;
+  margin-top: 10px;
 }
 
 .progress-fill {
   height: 100%;
   background: var(--accent);
-  border-radius: 4px;
+  border-radius: 999px;
   transition: width 0.3s ease;
 }
 
-.metric-sub {
+.review-card {
+  gap: 12px;
+}
+
+.review-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--accent);
+  margin-bottom: 4px;
+}
+
+.review-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
   color: var(--text-secondary);
-  font-size: 12px;
+}
+
+.review-row strong {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+.chart-card {
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
 }
 
 .chart-card h2 {
   margin: 0 0 4px;
   font-size: 18px;
+}
+
+.chart-card .subtitle {
+  margin-bottom: 16px;
+}
+
+@media (max-width: 1000px) {
+  .metric-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 
 @media (max-width: 768px) {
@@ -67,7 +144,6 @@
   }
 
   .metric-grid {
-    grid-template-columns: repeat(2, 1fr);
     gap: 12px;
   }
 
@@ -75,11 +151,16 @@
     padding: 14px;
   }
 
+  .metric-icon {
+    width: 32px;
+    height: 32px;
+  }
+
   .metric-value {
     font-size: 22px;
   }
 
-  .metric-card:last-child:nth-child(odd) {
+  .review-card {
     grid-column: span 2;
   }
 }

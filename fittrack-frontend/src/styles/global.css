@@ -57,7 +57,7 @@ input, select {
 
   .main-content {
     max-width: none;
-    padding: 16px 16px calc(88px + env(safe-area-inset-bottom));
+    padding: calc(16px + env(safe-area-inset-top)) 16px calc(88px + env(safe-area-inset-bottom));
   }
 
   /* 16px stops iOS from zooming in when an input is focused */
