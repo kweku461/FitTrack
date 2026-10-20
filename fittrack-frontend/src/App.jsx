@@ -7,6 +7,7 @@ import ProtectedRoute from './components/ProtectedRoute';
 
 const Dashboard = lazy(() => import('./pages/Dashboard'));
 const LogEntry = lazy(() => import('./pages/LogEntry'));
+const History = lazy(() => import('./pages/History'));
 const Goals = lazy(() => import('./pages/Goals'));
 const Settings = lazy(() => import('./pages/Settings'));
 
@@ -20,6 +21,7 @@ function App() {
         <Route element={<ProtectedRoute />}>
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/log" element={<LogEntry />} />
+          <Route path="/history" element={<History />} />
           <Route path="/goals" element={<Goals />} />
           <Route path="/settings" element={<Settings />} />
           <Route path="/profile" element={<Navigate to="/settings" replace />} />

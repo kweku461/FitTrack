@@ -45,7 +45,7 @@ function RecentActivity() {
     <div className="card recent-card">
       <div className="recent-header">
         <h2>Recent Activity</h2>
-        <Link to="/log" className="recent-link">
+        <Link to="/history" className="recent-link">
           View all
         </Link>
       </div>

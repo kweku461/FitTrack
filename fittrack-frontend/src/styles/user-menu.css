@@ -8,6 +8,13 @@
   border-bottom: 1px solid var(--border);
 }
 
+.topbar-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+
 .topbar-title {
   display: flex;
   flex-direction: column;
@@ -22,6 +29,25 @@
 .topbar-subheading {
   font-size: 14px;
   color: var(--text-secondary);
+}
+
+.menu-toggle {
+  display: none;
+  flex-shrink: 0;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--surface-hover);
+  color: var(--text-primary);
+}
+
+@media (max-width: 768px) {
+  .menu-toggle {
+    display: grid;
+  }
 }
 
 .user-menu {
